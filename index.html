@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Warna latar belakang yang lebih cerah */
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #003366; /* Biru tua */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #003366; /* Biru tua */
+        }
+        .options {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #003366; /* Biru tua */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #002244; /* Warna biru tua lebih gelap saat hover */
+        }
+        .result {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            border: 1px solid #003366; /* Border biru tua */
+        }
+        #resultMessage, #scoreMessage {
+            color: #003366; /* Biru tua */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Simple Quiz Form</h1>
+    <form id="quizForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="absen">Absen:</label>
+            <input type="text" id="absen" required>
+        </div>
+
+        <div class="form-group">
+            <label for="kelas">Kelas:</label>
+            <select id="kelas" required>
+                <option value="" disabled selected>Select your class</option>
+                <option value="9A">9A</option>
+                <option value="9B">9B</option>
+                <option value="9C">9C</option>
+                <option value="9D">9D</option>
+                <option value="9E">9E</option>
+                <option value="9F">9F</option>
+                <option value="9G">9G</option>
+                <option value="9H">9H</option>
+                <option value="9I">9I</option>
+                <option value="9J">9J</option>
+            </select>
+        </div>
+         
+        <div class="form-group">
+            <label>Question 1: What is the capital of France?</label>
+            <div class="options">
+                <label><input type="radio" name="question1" value="Paris" required> Paris</label>
+                <label><input type="radio" name="question1" value="London"> London</label>
+                <label><input type="radio" name="question1" value="Berlin"> Berlin</label>
+                <label><input type="radio" name="question1" value="Madrid"> Madrid</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Question 2: Which planet is known as the Red Planet?</label>
+            <div class="options">
+                <label><input type="radio" name="question2" value="Mars" required> Mars</label>
+                <label><input type="radio" name="question2" value="Jupiter"> Jupiter</label>
+                <label><input type="radio" name="question2" value="Saturn"> Saturn</label>
+                <label><input type="radio" name="question2" value="Venus"> Venus</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Question 3: Who wrote 'To Kill a Mockingbird'?</label>
+            <div class="options">
+                <label><input type="radio" name="question3" value="Harper Lee" required> Harper Lee</label>
+                <label><input type="radio" name="question3" value="Mark Twain"> Mark Twain</label>
+                <label><input type="radio" name="question3" value="Ernest Hemingway"> Ernest Hemingway</label>
+                <label><input type="radio" name="question3" value="F. Scott Fitzgerald"> F. Scott Fitzgerald</label>
+            </div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+    <div class="result" id="result">
+        <h2>Thank you for your submission!</h2>
+        <p id="resultMessage"></p>
+        <p id="scoreMessage"></p>
+    </div>
+</div>
+<script>
+    document.getElementById('quizForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah pengiriman form
+        // Ambil nilai dari input
+        const name = document.getElementById('name').value;
+        const absen = document.getElementById('absen').value;
+        const kelas = document.getElementById('kelas').value;
+        const question1 = document.querySelector('input[name="question1"]:checked');
+        const question2 = document.querySelector('input[name="question2"]:checked');
+        const question3 = document.querySelector('input[name="question3"]:checked');
+
+        // Cek jawaban dan hitung skor
+        let score = 0;
+        if (question1 && question1.value === 'Paris') {
+            score++;
+        }
+        if (question2 && question2.value === 'Mars') {
+            score++;
+        }
+        if (question3 && question3.value === 'Harper Lee') {
+            score++;
+        }
+
+        // Hitung persentase
+        const totalQuestions = 3;
+        const percentageScore = (score / totalQuestions) * 100;
+
+        // Tampilkan hasil
+        document.getElementById('resultMessage').textContent = `Hello, ${name} from class ${kelas} with absen ${absen}!`;
+        document.getElementById('scoreMessage').textContent = `Your score is ${percentageScore.toFixed(0)}/100.`;
+        document.getElementById('result').style.display = 'block';
+    });
+</script>
